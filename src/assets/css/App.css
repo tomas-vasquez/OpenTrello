@@ -1,3 +1,16 @@
+body {
+  overflow-x: hidden;
+  margin: 0;
+  font-family: "Jost", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
 .contain {
   min-height: 92.5vh;
   background-color: rgb(18, 55, 83);
@@ -6,7 +19,7 @@
   justify-content: flex-start;
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding-left: 0.75rem;
+  /* padding-left: 0.75rem; */
 }
 
 .contain::-webkit-scrollbar {
