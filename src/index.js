@@ -19,7 +19,7 @@ import Landing from "./pages/Landing";
 // CSS Imports
 import "./assets/css/App.css";
 
-function App({ history }) {
+function App() {
   const [userId, setUserId] = useState("Default Value");
   const [authed, setAuthed] = useState(false);
   const [loading, setLoading] = useState(true);

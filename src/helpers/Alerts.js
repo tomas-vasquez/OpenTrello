@@ -165,11 +165,11 @@ const showLoading = (isShow = true, message = "Consultando...") => {
   }
 };
 
-const setUplodingPercentage = (percentage) => {
-  percentage = parseInt(percentage);
-  document.getElementById("swal-progress-label").innerText = percentage + "%";
-  document.getElementById("swal-progress-bar").style.width = percentage + "%";
-};
+// const setUplodingPercentage = (percentage) => {
+//   percentage = parseInt(percentage);
+//   document.getElementById("swal-progress-label").innerText = percentage + "%";
+//   document.getElementById("swal-progress-bar").style.width = percentage + "%";
+// };
 
 const showUploding = (isShow = true, message = "Subiendo...") => {
   if (isShow) {

@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from "uuid";
 
 // Context API
 import { UserContext } from "contexts/userContext";
-import { AuthContext } from "contexts/authContext";
 
 // Child components
 import Navbar from "components/theme/Navbar";
@@ -14,8 +13,7 @@ function Trello() {
   const [cards, setCards] = useState([]);
   const [tasks, setTasks] = useState([]);
 
-  const { userId, setUserId } = useContext(UserContext);
-  const { authed, setAuthed } = useContext(AuthContext);
+  const { userId } = useContext(UserContext);
 
   console.log(userId);
   // Cards Call
@@ -28,14 +26,14 @@ function Trello() {
       });
   }, []);
 
-  // Tasks Call
-  useEffect(() => {
-    fetch("https://68.183.117.91.trellobackend.ga/tasks")
-      .then((res) => res.json())
-      .then((data) => {
-        setTasks([...tasks, ...data]);
-      });
-  }, []);
+  // // Tasks Call
+  // useEffect(() => {
+  //   fetch("https://68.183.117.91.trellobackend.ga/tasks")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setTasks([...tasks, ...data]);
+  //     });
+  // }, []);
 
   // ------ CARD'S STATE ------
   // Update Card Title && Update State
