@@ -3,11 +3,12 @@ import React, { useState, useContext, useEffect } from "react";
 import Modal from "react-modal";
 
 // Context API
-import { UserContext } from "./userContext";
-import { AuthContext } from "./authContext";
+import { UserContext } from "contexts/userContext";
+import { AuthContext } from "contexts/authContext";
 
 // // CSS Imports
-import "../../assets/css/landing.css";
+import "assets/css/landing.css";
+import Controller_Auth from "../fetchers/Auth";
 
 const modalStyles = {
   content: {
@@ -99,6 +100,8 @@ export default function Landing({ history }) {
   const { userId, setUserId } = useContext(UserContext);
   const { authed, setAuthed } = useContext(AuthContext);
 
+  const auth = new Controller_Auth();
+
   const closeModal = () => {
     // RESET ALL SIGN UP FIELDS UPON CLOSE
     setModalOpen(false);
@@ -121,6 +124,19 @@ export default function Landing({ history }) {
 
   const handleSignUp = (e) => {
     e.preventDefault();
+    auth.singup(
+      signUpEmail,
+      signUpPass,
+      signUpPassConf,
+      () => {
+        setAccountMade(true);
+      },
+      (error) => {
+        setAccountMade(false);
+        // setErrorMsgSignup(data.error);
+      }
+    );
+
     fetch(`/signup`, {
       method: "POST",
       headers: {
@@ -147,30 +163,20 @@ export default function Landing({ history }) {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    fetch(`/login`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+    auth.login(
+      loginEmail,
+      loginPass,
+      (data) => {
+        setAuthed(true);
+        setUserId(data.userid);
+        localStorage.setItem("rememberMe", true);
+        localStorage.setItem("userId", data.userid);
+        history.push("/home");
       },
-      body: JSON.stringify({
-        email: loginEmail,
-        pass: loginPass,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          setAuthed(true);
-          setUserId(data.userid);
-          localStorage.setItem("rememberMe", true);
-          localStorage.setItem("userId", data.userid);
-
-          history.push("/home");
-        } else {
-          setLoginFailed(true);
-        }
-      });
+      () => {
+        setLoginFailed(true);
+      }
+    );
   };
 
   return (

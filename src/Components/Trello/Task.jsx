@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../../assets/css/task.css";
+import "assets/css/task.css";
 
 export default function Task({
   taskTitle,

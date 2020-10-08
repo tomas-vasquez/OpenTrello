@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import "./card.css";
-import Task from "../Task";
+import Task from "./Task";
 
 export default function Card({
   cardTitle,

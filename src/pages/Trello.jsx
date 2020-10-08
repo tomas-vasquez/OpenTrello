@@ -3,12 +3,12 @@ import React, { useState, useEffect, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 // Context API
-import { UserContext } from "../Landing/userContext";
-import { AuthContext } from "../Landing/authContext";
+import { UserContext } from "contexts/userContext";
+import { AuthContext } from "contexts/authContext";
 
-// Child Components
-import Navbar from "../theme/Navbar";
-import Card from "./Card";
+// Child components
+import Navbar from "components/theme/Navbar";
+import Card from "components/Trello/Card";
 
 function Trello() {
   const [cards, setCards] = useState([]);

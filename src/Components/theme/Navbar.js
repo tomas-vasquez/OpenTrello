@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
-import "../../assets/css/nav.css";
+import "assets/css/nav.css";
 
-import { UserContext } from "../Landing/userContext";
-import { AuthContext } from "../Landing/authContext";
+import { UserContext } from "contexts/userContext";
+import { AuthContext } from "contexts/authContext";
 
 export default function Navbar({ history }) {
   const { userId, setUserId } = useContext(UserContext);
