@@ -1,8 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { v4 as uuidv4 } from "uuid";
-
-// // Context API
-// // import { UserContext } from "contexts/userContext";
 
 // Child components
 import Navbar from "components/theme/Navbar";
@@ -50,68 +46,57 @@ function Trello() {
   };
 
   const deleteCard = (_id) => {
-    setTasks(tasks.filter((currTask) => currTask.parentid !== _id));
-    setCards(cards.filter((currCard) => currCard._id !== _id));
-
-    fetch(`/cards/${_id}`, {
-      method: "DELETE",
+    controllerCards.deleteCard(_id, () => {
+      setTasks(tasks.filter((currTask) => currTask.parentid !== _id));
+      setCards(cards.filter((currCard) => currCard._id !== _id));
     });
   };
 
   // ------ TASK'S STATE ------
-  const updateTaskTitle = (taskId, newTitle) => {
-    controllerTasks.updateTaskTitle(taskId, newTitle, () => {
+  const updateTask = (taskId, updatedTask) => {
+    controllerTasks.updateTaskTitle(taskId, updatedTask, () => {
       let _tasks = [...tasks];
       _tasks = _tasks.map((curr) => {
         if (curr._id === taskId) {
-          curr.taskTitle = newTitle;
+          return updatedTask;
+        } else {
+          return curr;
         }
-        return curr;
       });
       setTasks(_tasks);
     });
   };
 
-  // Add Task to Card & Update State
   const addTask = (parentCardId, addedTitle) => {
     const newTask = {
       taskTitle: addedTitle,
       completed: false,
       parentid: parentCardId,
     };
-    controllerTasks.addTask(newTask, () => {
-      setTasks([...tasks, newTask]);
+    controllerTasks.addTask(newTask, (_newTask) => {
+      setTasks([...tasks, _newTask]);
     });
   };
 
   const deleteTask = (taskId) => {
-    setTasks(tasks.filter((currTask) => currTask.taskid !== taskId));
-
-    fetch(`/tasks/${taskId}`, {
-      method: "DELETE",
+    controllerTasks.deleteTask(taskId, () => {
+      setTasks(tasks.filter((currTask) => currTask._id !== taskId));
     });
   };
 
-  const strikeTask = (taskId) => {
-    let edit = tasks.slice();
-    edit.forEach((currTask) => {
-      if (currTask.taskid === taskId) {
-        let isStruck = currTask.completed;
-        currTask.completed = !isStruck;
+  // const strikeTask = (taskId, completed) => {
+  //   controllerTasks.strikeTask(taskId, completed, () => {
+  //     let _tasks = [...tasks];
+  //     _tasks = _tasks.map((curr) => {
+  //       if (curr._id === taskId) {
+  //         curr.completed = completed;
+  //       }
+  //       return curr;
+  //     });
+  //     setTasks(_tasks);
+  //   });
+  // };
 
-        fetch(`/tasks/completed/${taskId}`, {
-          method: "PUT",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        });
-      }
-    });
-    setTasks(edit);
-  };
-
-  // **** UI ****
   return (
     <>
       <Navbar />
@@ -127,10 +112,9 @@ function Trello() {
             updateCardTitle={updateCardTitle}
             deleteCard={deleteCard}
             // Task Functions
-            updateTaskTitle={updateTaskTitle}
+            updateTask={updateTask}
             addTask={addTask}
             deleteTask={deleteTask}
-            strikeTask={strikeTask}
           />
         ))}
 

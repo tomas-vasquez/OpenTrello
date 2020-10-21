@@ -1,32 +1,25 @@
 import Icons from "components/common/Icons";
 import React, { useState } from "react";
 
-export default function Task({
-  taskTitle,
-  taskId,
-  taskCompleted,
-  updateTaskTitle,
-  deleteTask,
-  strikeTask,
-}) {
+export default function Task({ task, updateTask, deleteTask, strikeTask }) {
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [taskTitleChangeBool, setTaskTitleChangeBool] = useState(false);
 
-  const [isCompleted, setIsCompleted] = useState(taskCompleted);
+  const [isCompleted, setIsCompleted] = useState(task.completed);
 
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
     if (newTaskTitle === "") {
       return;
     } else {
-      updateTaskTitle(taskId, newTaskTitle);
+      updateTask(task._id, { ...task, taskTitle: newTaskTitle });
       setNewTaskTitle("");
       setTaskTitleChangeBool(!taskTitleChangeBool);
     }
   };
 
   const handleStrike = () => {
-    strikeTask(taskId);
+    updateTask(task._id, { ...task, completed: !isCompleted });
     setIsCompleted(!isCompleted);
   };
 
@@ -42,7 +35,7 @@ export default function Task({
               <input
                 className="form-control"
                 type="text"
-                placeholder={taskTitle}
+                placeholder={task.taskTitle}
                 onChange={(event) => setNewTaskTitle(event.target.value)}
               />
             </div>
@@ -50,7 +43,7 @@ export default function Task({
         ) : (
           <>
             <p
-              onClick={() => handleStrike(taskId)}
+              onClick={() => handleStrike(task.taskId)}
               className="title"
               style={
                 isCompleted
@@ -63,7 +56,7 @@ export default function Task({
                   : { textDecoration: "none" }
               }
             >
-              {taskTitle}
+              {task.taskTitle}
             </p>
           </>
         )}
@@ -77,7 +70,7 @@ export default function Task({
 
           <button
             className="btn btn-outline btn-sm  text-muted"
-            onClick={() => deleteTask(taskId)}
+            onClick={() => deleteTask(task._id)}
           >
             <Icons icon="trash" />
           </button>

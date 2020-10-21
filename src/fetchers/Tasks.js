@@ -49,15 +49,15 @@ class Controller_Task extends Controller {
       });
   };
 
-  updateTaskTitle = (cardId, cardTitle, _callback) => {
+  updateTaskTitle = (taskId, taskUpdated, _callback) => {
     Alerts.showLoading();
     axios({
       method: "put",
-      url: apiUrl + "/cards",
+      url: apiUrl + "/tasks",
       headers: {
         "api-token": this.db.get("api-token"),
       },
-      data: { cardTitle, cardId },
+      data: taskUpdated,
     })
       .then((response) => {
         Alerts.showLoading(false);
@@ -65,7 +65,47 @@ class Controller_Task extends Controller {
       })
       .catch((error) => {
         this.errorsHandler(error, () =>
-          this.updateTaskTitle(cardTitle, cardId, _callback)
+          this.updateTaskTitle(taskId, taskUpdated, _callback)
+        );
+      });
+  };
+
+  deleteTask = (taskId, _callback) => {
+    Alerts.showLoading();
+    axios({
+      method: "delete",
+      url: apiUrl + "/tasks",
+      headers: {
+        "api-token": this.db.get("api-token"),
+      },
+      data: { taskId },
+    })
+      .then((response) => {
+        Alerts.showLoading(false);
+        _callback(response.data);
+      })
+      .catch((error) => {
+        this.errorsHandler(error, () => this.deleteTask(taskId, _callback));
+      });
+  };
+
+  strikeTask = (taskId, completed, _callback) => {
+    Alerts.showLoading();
+    axios({
+      method: "put",
+      url: apiUrl + "/tasks",
+      headers: {
+        "api-token": this.db.get("api-token"),
+      },
+      data: { taskId, completed },
+    })
+      .then((response) => {
+        Alerts.showLoading(false);
+        _callback(response.data);
+      })
+      .catch((error) => {
+        this.errorsHandler(error, () =>
+          this.strikeTask(taskId, completed, _callback)
         );
       });
   };

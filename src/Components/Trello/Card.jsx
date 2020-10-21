@@ -8,7 +8,7 @@ export default function Card({
   _id,
   updateCardTitle,
   deleteCard,
-  updateTaskTitle,
+  updateTask,
   addTask,
   deleteTask,
   strikeTask,
@@ -69,16 +69,13 @@ export default function Card({
       <div className="card-body p-2">
         {taskList.map((curr) => (
           <Task
-            key={curr.taskid}
+            key={curr._id}
             // Task Properties
-            taskTitle={curr.taskTitle}
-            taskId={curr.taskid}
-            taskCompleted={curr.completed}
+            task={curr}
             parentId={_id}
             // Task Functions
-            updateTaskTitle={updateTaskTitle}
+            updateTask={updateTask}
             deleteTask={deleteTask}
-            strikeTask={strikeTask}
           />
         ))}
       </div>

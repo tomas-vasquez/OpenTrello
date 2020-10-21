@@ -65,8 +65,27 @@ class Controller_Card extends Controller {
       })
       .catch((error) => {
         this.errorsHandler(error, () =>
-          this.updateCardTitle(cardTitle, cardId, _callback)
+          this.updateCardTitle(cardId, cardTitle, _callback)
         );
+      });
+  };
+
+  deleteCard = (cardId, _callback) => {
+    Alerts.showLoading();
+    axios({
+      method: "delete",
+      url: apiUrl + "/cards",
+      headers: {
+        "api-token": this.db.get("api-token"),
+      },
+      data: { cardId },
+    })
+      .then((response) => {
+        Alerts.showLoading(false);
+        _callback(response.data);
+      })
+      .catch((error) => {
+        this.errorsHandler(error, () => this.deleteCard(cardId, _callback));
       });
   };
 }
