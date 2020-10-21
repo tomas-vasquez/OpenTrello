@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Loading from "./components/common/Loading";
+import Loading from "./components/common/Loading.jsx";
 
 // Protected Route for Auth
 import ProtectedRoute from "./ProtectedRoute.js";

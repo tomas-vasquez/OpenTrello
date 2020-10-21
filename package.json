@@ -1,8 +1,4 @@
 {
-  "homepage": "http://jackbisceglia.github.io/",
-  "name": "react-frontend",
-  "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-brands-svg-icons": "^5.15.1",
@@ -27,7 +23,6 @@
     "sweetalert2": "^10.0.2",
     "uuid": "^8.1.0"
   },
-  "proxy": "https://68.183.117.91.trellobackend.ga",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
@@ -51,8 +46,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "gh-pages": "^2.2.0"
   }
 }
