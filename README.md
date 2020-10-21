@@ -1,4 +1,12 @@
 # Trello Clone
 A remake of Trello in React
-# URL
-https://jackbisceglia.github.io/trello-clone/
+
+# Screnshots:
+
+![](./assets/screenshot2.png)
+
+![](./assets/screenshot1.png)
+
+# Demo:
+
+https://open-trello.vercel.app
