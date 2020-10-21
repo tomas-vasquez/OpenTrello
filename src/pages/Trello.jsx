@@ -28,7 +28,6 @@ function Trello() {
       let _cards = [...cards];
       _cards = _cards.map((currCard) => {
         if (currCard._id === cardId) {
-          console.log(currCard.cardTitle);
           currCard.cardTitle = newTitle;
         }
         return currCard;
@@ -40,7 +39,6 @@ function Trello() {
   const addCard = () => {
     let cardTitle = "New Card (Update)";
     controllerCards.addCard(cardTitle, (newCard) => {
-      console.log(newCard);
       setCards([...cards, newCard]);
     });
   };
