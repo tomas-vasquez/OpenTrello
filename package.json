@@ -4,19 +4,26 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-brands-svg-icons": "^5.15.1",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.11",
     "@material-ui/core": "^4.9.14",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.20.0",
+    "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dnd": "^10.0.2",
     "react-dnd-html5-backend": "^10.0.2",
     "react-dom": "^16.13.1",
     "react-id-generator": "^3.0.0",
     "react-modal": "^3.11.2",
+    "react-particles-js": "^3.3.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-tooltip": "^4.2.10",
     "sweetalert2": "^10.0.2",
     "uuid": "^8.1.0"
   },
@@ -27,7 +34,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "compile-sass": "node-sass src/assets/scss/styles.scss src/assets/css/styles.min.css --output-style compressed"
   },
   "eslintConfig": {
     "extends": "react-app"

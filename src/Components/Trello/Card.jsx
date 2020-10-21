@@ -1,11 +1,11 @@
+import Icons from "components/common/Icons";
 import React, { useState } from "react";
-// import "./card.css";
 import Task from "./Task";
 
 export default function Card({
   cardTitle,
   taskList,
-  cardId,
+  _id,
   updateCardTitle,
   deleteCard,
   updateTaskTitle,
@@ -15,7 +15,6 @@ export default function Card({
 }) {
   const [newCardTitle, setNewCardTitle] = useState("");
   const [cardTitleChangeBool, setCardTitleChangeBool] = useState(false);
-
   const [addTaskTitle, setAddTaskTitle] = useState("");
 
   const handleUpdateSubmit = (e) => {
@@ -23,7 +22,7 @@ export default function Card({
     if (newCardTitle === "") {
       return;
     } else {
-      updateCardTitle(cardId, newCardTitle);
+      updateCardTitle(_id, newCardTitle);
       setCardTitleChangeBool(!cardTitleChangeBool);
       setNewCardTitle("");
     }
@@ -34,63 +33,77 @@ export default function Card({
     if (addTaskTitle === "") {
       return;
     } else {
-      addTask(cardId, addTaskTitle);
+      addTask(_id, addTaskTitle);
       setAddTaskTitle("");
     }
   };
-  // onSubmit={event => handleUpdateSubmit(event)} -> form onSubmit
+
   return (
     <div className="card">
-      <div className="title-div">
+      <div className="card-header d-flex p-2">
         {cardTitleChangeBool ? (
           <form action="" onSubmit={(event) => handleUpdateSubmit(event)}>
             <input
               onChange={(event) => setNewCardTitle(event.target.value)}
-              className="update-title"
               type="text"
+              className="form-control"
               placeholder={cardTitle}
             />
           </form>
         ) : (
-          <h3 onClick={() => setCardTitleChangeBool(!cardTitleChangeBool)}>
+          <h3
+            className="lead mb-0"
+            onClick={() => setCardTitleChangeBool(!cardTitleChangeBool)}
+          >
             {cardTitle}
           </h3>
         )}
+        <button
+          className="btn btn-secondary btn-sm ml-auto"
+          onClick={() => deleteCard(_id)}
+        >
+          <Icons icon="trash" className="mr-2" />
+          Delete
+        </button>
+      </div>
+      <div className="card-body p-2">
+        {taskList.map((curr) => (
+          <Task
+            key={curr.taskid}
+            // Task Properties
+            taskTitle={curr.taskTitle}
+            taskId={curr.taskid}
+            taskCompleted={curr.completed}
+            parentId={_id}
+            // Task Functions
+            updateTaskTitle={updateTaskTitle}
+            deleteTask={deleteTask}
+            strikeTask={strikeTask}
+          />
+        ))}
       </div>
 
-      {taskList.map((curr) => (
-        <Task
-          key={curr.taskid}
-          // Task Properties
-          taskTitle={curr.tasktitle}
-          taskId={curr.taskid}
-          taskCompleted={curr.completed}
-          parentId={cardId}
-          // Task Functions
-          updateTaskTitle={updateTaskTitle}
-          deleteTask={deleteTask}
-          strikeTask={strikeTask}
-        />
-      ))}
-
-      <form
-        className="add-task"
-        action="input"
-        onSubmit={(event) => handleAddSubmit(event)}
-      >
-        {/* Value field to reset */}
-        <input
-          type="text"
-          placeholder="Add Task"
-          value={addTaskTitle}
-          onChange={(event) => setAddTaskTitle(event.target.value)}
-        />
-        <button className="add-btn">+</button>
-      </form>
-
-      <button className="delete-card" onClick={() => deleteCard(cardId)}>
-        Delete
-      </button>
+      <div className="card-footer p-2">
+        <form
+          className="d-flex"
+          action="input"
+          onSubmit={(event) => handleAddSubmit(event)}
+        >
+          <div className="form-group mb-0">
+            <input
+              className="form-control"
+              type="text"
+              placeholder="Add Task"
+              onChange={(event) => setAddTaskTitle(event.target.value)}
+              value={addTaskTitle}
+            />
+          </div>
+          <button className="btn btn-sm btn-info ml-auto">
+            <Icons icon="plus" className="mr-2" />
+            add
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

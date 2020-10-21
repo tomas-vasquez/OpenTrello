@@ -1,135 +1,86 @@
-// Packages
-import React, { useState, useEffect, useContext } from "react";
-import { v4 as uuidv4 } from "uuid";
+import React, { useState, useEffect } from "react";
+// import { v4 as uuidv4 } from "uuid";
 
-// Context API
-import { UserContext } from "contexts/userContext";
+// // Context API
+// // import { UserContext } from "contexts/userContext";
 
 // Child components
 import Navbar from "components/theme/Navbar";
 import Card from "components/Trello/Card";
+import Widget from "../components/Trello/Widget";
+import Controller_Card from "fetchers/Cards";
+import Controller_Tasks from "fetchers/Tasks";
 
 function Trello() {
+  const controllerCards = new Controller_Card();
+  const controllerTasks = new Controller_Tasks();
+
   const [cards, setCards] = useState([]);
   const [tasks, setTasks] = useState([]);
 
-  const { userId } = useContext(UserContext);
-
-  console.log(userId);
-  // Cards Call
   useEffect(() => {
-    fetch("https://68.183.117.91.trellobackend.ga/cards/" + userId)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setCards([...cards, ...data]);
-      });
+    controllerCards.getCards((_cards) => {
+      setCards([...cards, ..._cards]);
+    });
+    controllerTasks.getTasks((_tasks) => {
+      setTasks([...tasks, ..._tasks]);
+    });
   }, []);
 
-  // // Tasks Call
-  // useEffect(() => {
-  //   fetch("https://68.183.117.91.trellobackend.ga/tasks")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setTasks([...tasks, ...data]);
-  //     });
-  // }, []);
-
-  // ------ CARD'S STATE ------
-  // Update Card Title && Update State
-  const updateCardTitle = (cardId, newName) => {
-    let edit = cards.slice();
-    edit.forEach((currCard) => {
-      if (currCard.cardid === cardId) {
-        console.log(currCard.cardTitle);
-        currCard.cardtitle = newName;
-      }
-    });
-    setCards(edit);
-
-    fetch(`https://68.183.117.91.trellobackend.ga/cards/${cardId}`, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        cardTitle: newName,
-      }),
+  const updateCardTitle = (cardId, newTitle) => {
+    controllerCards.updateCardTitle(cardId, newTitle, () => {
+      let _cards = [...cards];
+      _cards = _cards.map((currCard) => {
+        if (currCard._id === cardId) {
+          console.log(currCard.cardTitle);
+          currCard.cardTitle = newTitle;
+        }
+        return currCard;
+      });
+      setCards(_cards);
     });
   };
 
   const addCard = () => {
-    let nextCard = {
-      cardtitle: `New Card (Update)`,
-      cardid: uuidv4(),
-    };
-
-    setCards([...cards, nextCard]);
-
-    fetch(`/cards`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        cardId: nextCard.cardid,
-        cardTitle: nextCard.cardtitle,
-        user_id: userId,
-      }),
+    let cardTitle = "New Card (Update)";
+    controllerCards.addCard(cardTitle, (newCard) => {
+      console.log(newCard);
+      setCards([...cards, newCard]);
     });
   };
 
-  const deleteCard = (cardId) => {
-    setTasks(tasks.filter((currTask) => currTask.parentid !== cardId));
-    setCards(cards.filter((currCard) => currCard.cardid !== cardId));
+  const deleteCard = (_id) => {
+    setTasks(tasks.filter((currTask) => currTask.parentid !== _id));
+    setCards(cards.filter((currCard) => currCard._id !== _id));
 
-    fetch(`/cards/${cardId}`, {
+    fetch(`/cards/${_id}`, {
       method: "DELETE",
     });
   };
 
   // ------ TASK'S STATE ------
-  const updateTaskTitle = (taskId, newName) => {
-    let edit = tasks.slice();
-    edit.forEach((currTask) => {
-      if (currTask.taskid === taskId) {
-        currTask.tasktitle = newName;
-      }
-    });
-    setTasks(edit);
-
-    fetch(`/${taskId}`, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        tasktitle: newName,
-      }),
+  const updateTaskTitle = (taskId, newTitle) => {
+    controllerTasks.updateTaskTitle(taskId, newTitle, () => {
+      let _tasks = [...tasks];
+      _tasks = _tasks.map((curr) => {
+        if (curr._id === taskId) {
+          curr.taskTitle = newTitle;
+        }
+        return curr;
+      });
+      setTasks(_tasks);
     });
   };
 
   // Add Task to Card & Update State
   const addTask = (parentCardId, addedTitle) => {
     const newTask = {
-      taskid: uuidv4(),
-      tasktitle: addedTitle,
+      taskTitle: addedTitle,
       completed: false,
       parentid: parentCardId,
     };
-
-    setTasks([...tasks, newTask]);
-
-    fetch(`/tasks`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newTask),
+    controllerTasks.addTask(newTask, () => {
+      setTasks([...tasks, newTask]);
     });
   };
 
@@ -164,14 +115,14 @@ function Trello() {
   return (
     <>
       <Navbar />
-      <div className="contain">
+      <div className="container-fluid card-columns py-4">
         {/* CARDS */}
         {cards.map((currCard) => (
           <Card
-            key={currCard.cardid}
-            cardTitle={currCard.cardtitle}
-            taskList={tasks.filter((curr) => curr.parentid === currCard.cardid)}
-            cardId={currCard.cardid}
+            key={currCard._id}
+            cardTitle={currCard.cardTitle}
+            taskList={tasks.filter((curr) => curr.parentid === currCard._id)}
+            _id={currCard._id}
             // Card Functions
             updateCardTitle={updateCardTitle}
             deleteCard={deleteCard}
@@ -183,18 +134,7 @@ function Trello() {
           />
         ))}
 
-        {/* NEW CARD */}
-        <button className="new-list" onClick={() => addCard()}>
-          +
-        </button>
-        <div className="padding-div"></div>
-        {/* TEMP - DELETE */}
-        {/* <button onClick={() => {
-        console.table(cards)
-        }}>See Cards</button>
-      <button onClick={() => {
-        console.table(tasks)
-        }}>See Tasks</button> */}
+        <Widget onClick={() => addCard()} />
       </div>
     </>
   );

@@ -5,13 +5,11 @@ import Modal from "react-modal";
 // Context API
 
 // // CSS Imports
-import "assets/css/landing.css";
+// import "assets/css/landing.css";
 import Controller_Auth from "fetchers/Auth";
 
 const modalStyles = {
   content: {
-    width: "30%",
-    height: "55%",
     top: "50%",
     left: "50%",
     right: "auto",
@@ -75,42 +73,52 @@ export default function Landing({ modalOpen, setModalOpen }) {
       style={modalStyles}
       contentLabel="Example Modal"
     >
-      <h1 style={{ textAlign: "center", fontSize: "1.5rem" }}>
-        Sign Up for Trello Clone!
-      </h1>
+      <h1 className="display-4 mb-3">Sign Up for Open-Trello</h1>
       <form
         action=""
         className="sign-up"
         onSubmit={(event) => handleSignUp(event)}
       >
-        <input
-          type="username"
-          placeholder="user name"
-          onChange={(event) => setSignUpUSerName(event.target.value)}
-        />
-        <input
-          type="email"
-          placeholder="Email Address"
-          onChange={(event) => setSignUpEmail(event.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          onChange={(event) => {
-            setSignUpPass(event.target.value);
-          }}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          onChange={(event) => {
-            setSignUpPassConf(event.target.value);
-          }}
-        />
+        <div className="form-group">
+          <input
+            type="username"
+            className="form-control"
+            placeholder="user name"
+            onChange={(event) => setSignUpUSerName(event.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="email"
+            className="form-control"
+            placeholder="Email Address"
+            onChange={(event) => setSignUpEmail(event.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Password"
+            onChange={(event) => {
+              setSignUpPass(event.target.value);
+            }}
+          />
+        </div>
+        {/* <div className="form-group">
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Password"
+            onChange={(event) => {
+              setSignUpPassConf(event.target.value);
+            }}
+          />
+        </div> */}
         <p style={{ fontSize: ".675rem", marginTop: "0" }}>
           Password must contain one uppercase letter and a number
         </p>
-        <button className="button sign-up-btn">Sign Up!</button>
+        <button className="btn btn-info">Sign Up!</button>
       </form>
 
       {signUpSent && accountMade ? (

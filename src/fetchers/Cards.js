@@ -4,38 +4,38 @@ import Alerts from "helpers/Alerts";
 import { apiUrl } from "../site.config";
 import axios from "axios";
 
-class Controller_Task extends Controller {
+class Controller_Card extends Controller {
   /*!
     =========================================================
     * 
     =========================================================
     */
 
-  addTask = (data, _callback) => {
+  addCard = (title, _callback) => {
     Alerts.showLoading();
 
     axios({
       method: "post",
-      url: apiUrl + "/tasks",
+      url: apiUrl + "/cards",
       headers: {
         "api-token": this.db.get("api-token"),
       },
-      data,
+      data: { title },
     })
       .then((response) => {
         Alerts.showLoading(false);
         _callback(response.data);
       })
       .catch((error) => {
-        this.errorsHandler(error, () => this.addTask(data));
+        this.errorsHandler(error, () => this.addCard(title));
       });
   };
 
-  getTasks = (_callback) => {
+  getCards = (_callback) => {
     Alerts.showLoading();
     axios({
       method: "get",
-      url: apiUrl + "/tasks",
+      url: apiUrl + "/cards",
       headers: {
         "api-token": this.db.get("api-token"),
       },
@@ -45,11 +45,11 @@ class Controller_Task extends Controller {
         _callback(response.data);
       })
       .catch((error) => {
-        this.errorsHandler(error, () => this.getTasks(_callback));
+        this.errorsHandler(error, () => this.getCards(_callback));
       });
   };
 
-  updateTaskTitle = (cardId, cardTitle, _callback) => {
+  updateCardTitle = (cardId, cardTitle, _callback) => {
     Alerts.showLoading();
     axios({
       method: "put",
@@ -65,10 +65,10 @@ class Controller_Task extends Controller {
       })
       .catch((error) => {
         this.errorsHandler(error, () =>
-          this.updateTaskTitle(cardTitle, cardId, _callback)
+          this.updateCardTitle(cardTitle, cardId, _callback)
         );
       });
   };
 }
 
-export default Controller_Task;
+export default Controller_Card;

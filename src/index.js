@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Loading from "./components/common/Loading.js";
+import Loading from "./components/common/Loading";
 
 // Protected Route for Auth
 import ProtectedRoute from "./ProtectedRoute.js";
@@ -15,9 +15,10 @@ import { AuthContext } from "./contexts/authContext";
 // Page components
 import Trello from "./pages/Trello";
 import Landing from "./pages/Landing";
+import Layout from "./components/common/Layouth";
 
 // CSS Imports
-import "./assets/css/App.css";
+import "./assets/css/styles.min.css";
 
 function App() {
   const [userId, setUserId] = useState("Default Value");
@@ -37,16 +38,18 @@ function App() {
   return loading ? (
     <Loading />
   ) : (
-    <AuthContext.Provider value={{ authed, setAuthed }}>
-      <UserContext.Provider value={{ userId, setUserId }}>
-        <BrowserRouter>
-          <Switch>
-            <Route path="/" exact component={Landing} />
-            <ProtectedRoute component={Trello} />
-          </Switch>
-        </BrowserRouter>
-      </UserContext.Provider>
-    </AuthContext.Provider>
+    <Layout>
+      <AuthContext.Provider value={{ authed, setAuthed }}>
+        <UserContext.Provider value={{ userId, setUserId }}>
+          <BrowserRouter>
+            <Switch>
+              <Route path="/" exact component={Landing} />
+              <ProtectedRoute component={Trello} />
+            </Switch>
+          </BrowserRouter>
+        </UserContext.Provider>
+      </AuthContext.Provider>
+    </Layout>
   );
 }
 

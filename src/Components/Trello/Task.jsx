@@ -1,11 +1,10 @@
+import Icons from "components/common/Icons";
 import React, { useState } from "react";
-import "assets/css/task.css";
 
 export default function Task({
   taskTitle,
   taskId,
   taskCompleted,
-  parentId,
   updateTaskTitle,
   deleteTask,
   strikeTask,
@@ -33,18 +32,20 @@ export default function Task({
 
   return (
     <>
-      <div className="task">
+      <div className="card p-2">
         {taskTitleChangeBool ? (
           <form
             className="update-form"
             onSubmit={(event) => handleUpdateSubmit(event)}
           >
-            <input
-              className="update-task"
-              type="text"
-              placeholder={taskTitle}
-              onChange={(event) => setNewTaskTitle(event.target.value)}
-            />
+            <div className="form-group">
+              <input
+                className="form-control"
+                type="text"
+                placeholder={taskTitle}
+                onChange={(event) => setNewTaskTitle(event.target.value)}
+              />
+            </div>
           </form>
         ) : (
           <>
@@ -66,14 +67,19 @@ export default function Task({
             </p>
           </>
         )}
-        <div className="buttons">
+        <div className=" d-flex">
           <button
-            className="edit-task"
+            className="btn btn-outline btn-sm ml-auto text-muted"
             onClick={() => setTaskTitleChangeBool(!taskTitleChangeBool)}
-          ></button>
+          >
+            <Icons icon="pencil" />
+          </button>
 
-          <button className="delete" onClick={() => deleteTask(taskId)}>
-            X
+          <button
+            className="btn btn-outline btn-sm  text-muted"
+            onClick={() => deleteTask(taskId)}
+          >
+            <Icons icon="trash" />
           </button>
         </div>
       </div>

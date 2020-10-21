@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import "assets/css/nav.css";
+// import "assets/css/nav.css";
 
 import { UserContext } from "contexts/userContext";
 import { AuthContext } from "contexts/authContext";
@@ -17,10 +17,10 @@ export default function Navbar({ history }) {
   };
 
   return (
-    <div className="bar">
-      <h1>Open-Trello</h1>
+    <div className="navbar navbar-white bg-secondary">
+      <h1 className="text-white display-4">Open-Trello</h1>
       <button
-        className="signout"
+        className="btn btn-info"
         onClick={() => {
           handleLogout();
         }}
