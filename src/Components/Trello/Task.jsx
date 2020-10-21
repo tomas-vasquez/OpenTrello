@@ -37,6 +37,7 @@ export default function Task({ task, updateTask, deleteTask, strikeTask }) {
                 type="text"
                 placeholder={task.taskTitle}
                 onChange={(event) => setNewTaskTitle(event.target.value)}
+                defaultValue={task.taskTitle}
               />
             </div>
           </form>

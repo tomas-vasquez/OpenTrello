@@ -19,19 +19,20 @@ import Layout from "./components/common/Layouth";
 
 // CSS Imports
 import "./assets/css/styles.min.css";
+import DB from "helpers/db";
 
 function App() {
   const [userId, setUserId] = useState("Default Value");
   const [authed, setAuthed] = useState(false);
   const [loading, setLoading] = useState(true);
+  const db = new DB();
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem("rememberMe") === "true";
-    if (loggedIn) {
-      setUserId(localStorage.getItem("userId"));
+    const apiKey = db.get("api-token");
+
+    if (apiKey) {
       setAuthed(true);
     }
-
     setLoading(false);
   }, []);
 
