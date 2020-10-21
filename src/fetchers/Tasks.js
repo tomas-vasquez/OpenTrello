@@ -1,6 +1,6 @@
 import Controller from ".././fetchers";
 
-import Alerts from "helpers/Alerts";
+import Alerts from "../helpers/Alerts";
 import { apiUrl } from "../site.config";
 import axios from "axios";
 

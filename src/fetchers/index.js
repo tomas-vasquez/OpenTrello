@@ -1,5 +1,5 @@
-import Alerts from "helpers/Alerts";
-import DB from "helpers/db";
+import Alerts from "../helpers/Alerts";
+import DB from "../helpers/db";
 
 class Controller {
   constructor() {

@@ -38,9 +38,6 @@ const getIcon = (icon) => {
     case "trash":
       return faTrash;
 
-    case "plus":
-      return faPlus;
-
     case "arrowDown":
       return faArrowDown;
 

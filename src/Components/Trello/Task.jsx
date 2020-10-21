@@ -1,4 +1,4 @@
-import Icons from "components/common/Icons";
+import Icons from "../../components/common/Icons";
 import React, { useState } from "react";
 
 export default function Task({ task, updateTask, deleteTask, strikeTask }) {

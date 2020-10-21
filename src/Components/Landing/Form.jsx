@@ -2,14 +2,14 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 // Context API
-import { UserContext } from "contexts/userContext";
-import { AuthContext } from "contexts/authContext";
+import { UserContext } from "../../contexts/userContext";
+import { AuthContext } from "../../contexts/authContext";
 
 // // CSS Imports
 // import "assets/css/landing.css";
 
-import Controller_Auth from "fetchers/Auth";
-import DB from "helpers/db";
+import Controller_Auth from "../../fetchers/Auth";
+import DB from "../../helpers/db";
 
 export default function Landing({ setModalOpen }) {
   const db = new DB();

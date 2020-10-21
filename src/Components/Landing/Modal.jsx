@@ -6,7 +6,7 @@ import Modal from "react-modal";
 
 // // CSS Imports
 // import "assets/css/landing.css";
-import Controller_Auth from "fetchers/Auth";
+import Controller_Auth from "../../fetchers/Auth";
 
 const modalStyles = {
   content: {
@@ -29,7 +29,6 @@ export default function Landing({ modalOpen, setModalOpen }) {
   const [signUpUSerName, setSignUpUSerName] = useState("");
   const [signUpEmail, setSignUpEmail] = useState("");
   const [signUpPass, setSignUpPass] = useState("");
-  const [signUpPassConf, setSignUpPassConf] = useState("");
 
   // Auth for UI
   const [signUpSent, setSignUpSent] = useState(false);
@@ -42,9 +41,6 @@ export default function Landing({ modalOpen, setModalOpen }) {
     setModalOpen(false);
     setAccountMade(false);
     setSignUpSent(false);
-
-    setSignUpPass("");
-    setSignUpPassConf("");
   };
 
   const handleSignUp = (e) => {
