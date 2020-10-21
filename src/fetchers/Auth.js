@@ -55,7 +55,7 @@ class Controller_Auth extends Controller {
       data: signUpData,
     })
       .then((response) => {
-        Alerts.showLoading(false);
+        Alerts.showSuccess("inicia sesión ahora");
         _success && _success(response.data);
       })
       .catch((error) => {

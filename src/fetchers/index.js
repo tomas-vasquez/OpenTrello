@@ -33,41 +33,25 @@ class Controller {
             case "error-incorrect-password":
               return Alerts.showAlert(
                 "Revise la contrasena ingresado...",
-                "Contrasena incorrecta!",
-                true,
-                (e) => {
-                  document.getElementById("input-password").focus();
-                }
+                "Contrasena incorrecta!"
               );
 
             case "error-unexist-email":
               return Alerts.showAlert(
                 "Revise el correo electrónico ingresado...",
-                "Correo electrónico no encontrado!",
-                true,
-                (e) => {
-                  document.getElementById("input-email").focus();
-                }
+                "Correo electrónico no encontrado!"
               );
 
             case "error-already-exist-email":
               return Alerts.showAlert(
                 "Ingrese otro correo...",
-                "Correo electrónico ya registrado!",
-                true,
-                (e) => {
-                  document.getElementById("input-email").focus();
-                }
+                "Correo electrónico ya registrado!"
               );
 
             case "error-already-exist-username":
               return Alerts.showAlert(
                 "Ingrese otro nombre...",
-                "nombre de cuenta ya registrado!",
-                true,
-                (e) => {
-                  document.getElementById("input-username").focus();
-                }
+                "nombre de cuenta ya registrado!"
               );
 
             default:

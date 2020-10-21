@@ -53,6 +53,7 @@ export default function Landing({ modalOpen, setModalOpen }) {
         // signUpPassConf,
       },
       () => {
+        setModalOpen(false);
         setAccountMade(true);
       },
       (error) => {
