@@ -1,7 +1,5 @@
-const apiUrl = process.env.API_URL || "http://localhost:3001";
+// init. environment variables
+const dotenv = require("dotenv");
+dotenv.config();
 
-console.log("-----------------------------------");
-console.log(process.env);
-
-console.log("-----------------------------------");
-export { apiUrl };
+export const apiUrl = process.env.API_URL || "http://localhost:3001";
