@@ -1,4 +1,4 @@
-import Icons from "../../components/common/Icons";
+import Icons from "../../Components/common/Icons";
 import React, { useState } from "react";
 import Task from "./Task";
 

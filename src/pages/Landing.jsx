@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 
 // Context API
-import SingnupModal from "../components/Landing/Modal";
-import LoginForm from "../components/Landing/Form";
+import SingnupModal from "../Components/Landing/Modal";
+import LoginForm from "../Components/Landing/Form";
 
 // // CSS Imports
 // import "assets/css/landing.css";

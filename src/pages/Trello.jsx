@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-// Child components
-import Navbar from "../components/theme/Navbar";
-import Card from "../components/Trello/Card";
-import Widget from "../components/Trello/Widget";
+// Child Components
+import Navbar from "../Components/theme/Navbar";
+import Card from "../Components/Trello/Card";
+import Widget from "../Components/Trello/Widget";
 import Controller_Card from "../fetchers/Cards";
 import Controller_Tasks from "../fetchers/Tasks";
 
